@@ -99,24 +99,67 @@ var img = new Image(); // img.src = 'https://opengameart.org/sites/default/files
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+var forward = [9, 72, 135, 201, 264, 327, 391, 456, 521];
+var backward = [16, 79, 143, 208, 272, 334, 402, 467, 530];
+var up = [6, 69, 131, 198, 261, 327, 391, 456, 518];
+var down = [6, 69, 131, 198, 261, 327, 391, 456, 518];
+var lastRender = renderforward; // [7,69,135,201,263,325,390,456,]
 
-function drawLegion() {
+function loadImage(url) {
+  imageholder = {};
+  img1.src = '../images/background/Legionnaire.png';
+}
+
+function drawLegion(x, y, index, direction) {
   img.src = '../images/background/Legionnaire.png';
 
   img.onload = function () {
-    init();
+    if (direction === 'backward') {
+      lastRender = renderbackward;
+      lastRender(x, y, index);
+    } else if (direction === 'forward') {
+      lastRender = renderforward;
+      lastRender(x, y, index);
+    } else if (direction === 'up') {
+      lastRender = renderup;
+      lastRender(x, y, index);
+    } else if (direction === 'down') {
+      lastRender = renderdown;
+      lastRender(x, y, index);
+    } else {
+      lastRender(x, y);
+    }
   };
 }
 
-function init() {
-  ctx.drawImage(img, 72, 722, 43, 50, 10, 10, 43, 50);
+function renderforward(x, y) {
+  var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  ctx.drawImage(img, forward[index], 720, 40, 53, x, y, 40, 53);
 }
 
-function render(x, y) {
-  ctx.drawImage(img, 72, 722, 43, 50, 10, 10, 43, 50);
+function renderbackward(x, y) {
+  var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  ctx.drawImage(img, backward[index], 589, 40, 53, x, y, 40, 53);
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (drawLegion);
+function renderup(x, y) {
+  var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  ctx.drawImage(img, up[index], 524, 40, 53, x, y, 40, 53);
+}
+
+function renderdown(x, y) {
+  var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  ctx.drawImage(img, down[index], 651, 40, 53, x, y, 40, 53);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (drawLegion); // ctx.drawImage(img, 9, 720  , 40, 51, x, y, 40, 51);
+// ctx.drawImage(img, 72, 720 , 40, 51, 40, y, 40, 51);
+// ctx.drawImage(img, 135, 720 , 40, 51, 80, y, 40, 51);
+// ctx.drawImage(img, 264, 720 , 40, 51, 120, y, 40, 51);
+// ctx.drawImage(img, 327, 720 , 40, 51, 160, y, 40, 51);
+// ctx.drawImage(img, 391, 720 , 40, 51, 200, y, 40, 51);
+// ctx.drawImage(img, 456, 720 , 40, 51, 240, y, 40, 51);
+// ctx.drawImage(img, 521, 720 , 40, 51, 280, y, 40, 51);
 
 /***/ }),
 
@@ -137,6 +180,12 @@ var leftPressed = false;
 var rightPressed = false;
 var upPressed = false;
 var downPressed = false;
+var x = 0;
+var y = 350;
+var forwardIndex = 0;
+var backwardIndex = 0;
+var upwardIndex = 0;
+var downwardIndex = 0;
 
 function init() {
   // initialize game
@@ -147,12 +196,38 @@ function init() {
   img.onload = function () {
     ctx.drawImage(img, 0, 0, img.width, img.height, // source rectangle
     0, 0, canvas.width, canvas.height);
-    Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])();
+
+    if (leftPressed) {
+      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
+    } else if (rightPressed) {
+      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
+    } else if (upPressed) {
+      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
+    } else if (downPressed) {
+      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
+    } else {
+      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y);
+    }
   };
 
   function loop() {
-    x = x + 1;
-    y = y + 1;
+    if (leftPressed) {
+      x > 0 ? x -= 1 : x;
+      backwardIndex === 8 ? backwardIndex = 0 : backwardIndex += 1;
+      forwardIndex = 0;
+    } else if (rightPressed) {
+      x < canvas.width - 40 ? x += 1 : x;
+      forwardIndex === 8 ? forwardIndex = 0 : forwardIndex += 1;
+      backwardIndex = 0;
+    }
+
+    if (upPressed) {
+      y > 0 ? y -= 1 : y;
+      upwardIndex === 8 ? upwardIndex = 0 : upwardIndex += 1;
+    } else if (downPressed) {
+      y < canvas.height - 53 ? y += 1 : y;
+      downwardIndex === 8 ? downwardIndex = 0 : downwardIndex += 1;
+    }
   }
 
   loop();
@@ -163,7 +238,7 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 function keyDownHandler(e) {
-  switch (e) {
+  switch (e.keyCode) {
     case 65:
       //move left
       leftPressed = true;
@@ -174,12 +249,12 @@ function keyDownHandler(e) {
       rightPressed = true;
       break;
 
-    case 83:
+    case 87:
       //move up
       upPressed = true;
       break;
 
-    case 68:
+    case 83:
       //move down
       downPressed = true;
       break;
@@ -190,7 +265,7 @@ function keyDownHandler(e) {
 }
 
 function keyUpHandler(e) {
-  switch (e) {
+  switch (e.keyCode) {
     case 65:
       //move left
       leftPressed = false;
@@ -201,12 +276,12 @@ function keyUpHandler(e) {
       rightPressed = false;
       break;
 
-    case 83:
+    case 87:
       //move up
       upPressed = false;
       break;
 
-    case 68:
+    case 83:
       //move down
       downPressed = false;
       break;
