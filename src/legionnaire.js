@@ -33,6 +33,9 @@ function drawLegion(x,y, index,direction){
             
             lastRender(x,y);
         }
+    ctx.beginPath();
+    ctx.rect(x, y, 40, 53);
+    ctx.stroke();
     };
 }
 

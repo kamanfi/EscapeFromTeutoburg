@@ -86,6 +86,28 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/invisbleBoxes.js":
+/*!******************************!*\
+  !*** ./src/invisbleBoxes.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+function drawBox() {
+  ctx.beginPath();
+  ctx.rect(14, 200, 90, 140);
+  ctx.stroke();
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (drawBox);
+
+/***/ }),
+
 /***/ "./src/legionnaire.js":
 /*!****************************!*\
   !*** ./src/legionnaire.js ***!
@@ -129,6 +151,10 @@ function drawLegion(x, y, index, direction) {
     } else {
       lastRender(x, y);
     }
+
+    ctx.beginPath();
+    ctx.rect(x, y, 40, 53);
+    ctx.stroke();
   };
 }
 
@@ -173,15 +199,32 @@ function renderdown(x, y) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _legionnaire__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./legionnaire */ "./src/legionnaire.js");
+/* harmony import */ var _invisbleBoxes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./invisbleBoxes */ "./src/invisbleBoxes.js");
+
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+var x = 0;
+var y = 350; // let collisionBox =[[14,200], [14,340], [104,200], [140,340]];
+// let playerBox=[[x,y], [x,y+53] , [x+40,y,], [x+40,y+53]];
+
+var rect1 = {
+  x: 14,
+  y: 200,
+  width: 90,
+  height: 140
+};
+var rect2 = {
+  x: x,
+  y: y,
+  width: 40,
+  height: 53
+}; //game state
+
 var leftPressed = false;
 var rightPressed = false;
 var upPressed = false;
 var downPressed = false;
-var x = 0;
-var y = 350;
 var forwardIndex = 0;
 var backwardIndex = 0;
 var upwardIndex = 0;
@@ -194,44 +237,92 @@ function init() {
   img.src = background;
 
   img.onload = function () {
+    rect2 = {
+      x: x,
+      y: y,
+      width: 40,
+      height: 53
+    };
     ctx.drawImage(img, 0, 0, img.width, img.height, // source rectangle
     0, 0, canvas.width, canvas.height);
 
     if (leftPressed) {
-      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
+      if (collision() == false) {
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
+      } else {
+        console.log('LEFT');
+        console.log(collision());
+        console.log("x: ".concat(x));
+        console.log("y: ".concat(y));
+        x += 2;
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
+      }
     } else if (rightPressed) {
-      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
+      if (collision() == false) {
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
+      } else {
+        x -= 2;
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
+      }
     } else if (upPressed) {
-      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
+      if (collision() == false) {
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
+      } else {
+        console.log('UP');
+        console.log(collision());
+        console.log("x: ".concat(x));
+        console.log("y: ".concat(y));
+        y += 2;
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
+      }
     } else if (downPressed) {
-      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
+      if (collision() == false) {
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
+      } else {
+        y -= 2;
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
+      }
     } else {
       Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y);
     }
+
+    Object(_invisbleBoxes__WEBPACK_IMPORTED_MODULE_1__["default"])();
   };
 
   function loop() {
     if (leftPressed) {
-      x > 0 ? x -= 1 : x;
+      x > 0 ? x -= 2 : x;
       backwardIndex === 8 ? backwardIndex = 0 : backwardIndex += 1;
       forwardIndex = 0;
     } else if (rightPressed) {
-      x < canvas.width - 40 ? x += 1 : x;
+      x < canvas.width - 40 ? x += 2 : x;
       forwardIndex === 8 ? forwardIndex = 0 : forwardIndex += 1;
       backwardIndex = 0;
     }
 
     if (upPressed) {
-      y > 0 ? y -= 1 : y;
+      y > 0 ? y -= 2 : y;
       upwardIndex === 8 ? upwardIndex = 0 : upwardIndex += 1;
+      downwardIndex = 0;
     } else if (downPressed) {
-      y < canvas.height - 53 ? y += 1 : y;
+      y < canvas.height - 53 ? y += 2 : y;
       downwardIndex === 8 ? downwardIndex = 0 : downwardIndex += 1;
+      upwardIndex = 0;
     }
   }
 
   loop();
   requestAnimationFrame(init);
+}
+
+function collision() {
+  debugger;
+
+  if (rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height && rect1.y + rect1.height > rect2.y) {
+    return true;
+  }
+
+  return false;
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
