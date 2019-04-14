@@ -2,11 +2,14 @@ let img = new Image();
 // img.src = 'https://opengameart.org/sites/default/files/Green-Cap-Character-16x18.png';
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
+
 let forward= [9,72,135,201,264,327,391,456,521];
 let backward = [16,79,143,208,272,334,402,467,530];
 let up = [6,69,131,198,261,327,391,456,518];
 let down = [6,69,131,198,261,327,391,456,518];
+let death = [6,69,131,198,261,327,391,456,518];
 let lastRender = renderforward;
+
 // [7,69,135,201,263,325,390,456,]
 function loadImage(url){
     imageholder = {};
@@ -30,6 +33,9 @@ function drawLegion(x,y, index,direction){
         }else if (direction === 'down'){
             lastRender = renderdown;
             lastRender(x,y,index);
+        }else if (direction === 'dead'){
+           
+            renderDeath(x,y,index);
         }else{
           
             lastRender(x,y);
@@ -54,6 +60,10 @@ function renderup (x,y,index=0){
 
 function renderdown(x,y,index=0){
     ctx.drawImage(img, down[index], 651 , 40, 53, x, y, 40, 53);
+}
+
+function renderDeath(x,y,index=0){
+    ctx.drawImage(img, death[index], 1291 , 40, 53, x, y, 40, 53);
 }
 
 export default drawLegion;

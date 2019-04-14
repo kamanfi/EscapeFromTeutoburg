@@ -22,24 +22,35 @@ export default class Skeleton{
     constructor(){
         this.x = Math.floor( 300+ Math.random() * 900);
         this.y  = Math.floor(Math.random() * 700);
+        this.img = new Image();
+        this.img.src = '../images/background/skeleton.png';
+        this.img.onload = function() {
+            //loads image
+            };
     }
 
     render(index){
-        let img = new Image();
-        const that = this;
-        img.src = '../images/background/skeleton.png';
-        img.onload = function() {
-                ctx.drawImage(img, backward[index], 589 , 40, 53,that.x, that.y, 40, 53);    
-                ctx.beginPath();
-                ctx.rect(that.x, that.y, 40, 53);
-                ctx.stroke();
-                };
+
+            ctx.drawImage(this.img, backward[index], 589 , 40, 53,this.x, this.y, 40, 53);    
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, 40, 53);
+            ctx.stroke();
+
     }
 
     move(index){
         
         this.x -=5;
         this.render(index);
+    }
+
+    taunt(index){
+
+        ctx.drawImage(this.img, Math.floor(backward[index]), 144 , 40, 53,this.x, this.y, 40, 53);    
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, 40, 53);
+        ctx.stroke();
+
     }
 
     box(){

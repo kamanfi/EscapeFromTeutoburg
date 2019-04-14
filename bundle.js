@@ -127,27 +127,34 @@ function () {
 
     this.x = Math.floor(300 + Math.random() * 900);
     this.y = Math.floor(Math.random() * 700);
+    this.img = new Image();
+    this.img.src = '../images/background/skeleton.png';
+
+    this.img.onload = function () {//loads image
+    };
   }
 
   _createClass(Skeleton, [{
     key: "render",
     value: function render(index) {
-      var img = new Image();
-      var that = this;
-      img.src = '../images/background/skeleton.png';
-
-      img.onload = function () {
-        ctx.drawImage(img, backward[index], 589, 40, 53, that.x, that.y, 40, 53);
-        ctx.beginPath();
-        ctx.rect(that.x, that.y, 40, 53);
-        ctx.stroke();
-      };
+      ctx.drawImage(this.img, backward[index], 589, 40, 53, this.x, this.y, 40, 53);
+      ctx.beginPath();
+      ctx.rect(this.x, this.y, 40, 53);
+      ctx.stroke();
     }
   }, {
     key: "move",
     value: function move(index) {
       this.x -= 5;
       this.render(index);
+    }
+  }, {
+    key: "taunt",
+    value: function taunt(index) {
+      ctx.drawImage(this.img, Math.floor(backward[index]), 144, 40, 53, this.x, this.y, 40, 53);
+      ctx.beginPath();
+      ctx.rect(this.x, this.y, 40, 53);
+      ctx.stroke();
     }
   }, {
     key: "box",
@@ -185,6 +192,7 @@ var forward = [9, 72, 135, 201, 264, 327, 391, 456, 521];
 var backward = [16, 79, 143, 208, 272, 334, 402, 467, 530];
 var up = [6, 69, 131, 198, 261, 327, 391, 456, 518];
 var down = [6, 69, 131, 198, 261, 327, 391, 456, 518];
+var death = [6, 69, 131, 198, 261, 327, 391, 456, 518];
 var lastRender = renderforward; // [7,69,135,201,263,325,390,456,]
 
 function loadImage(url) {
@@ -208,6 +216,8 @@ function drawLegion(x, y, index, direction) {
     } else if (direction === 'down') {
       lastRender = renderdown;
       lastRender(x, y, index);
+    } else if (direction === 'dead') {
+      renderDeath(x, y, index);
     } else {
       lastRender(x, y);
     }
@@ -236,6 +246,11 @@ function renderup(x, y) {
 function renderdown(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   ctx.drawImage(img, down[index], 651, 40, 53, x, y, 40, 53);
+}
+
+function renderDeath(x, y) {
+  var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  ctx.drawImage(img, death[index], 1291, 40, 53, x, y, 40, 53);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (drawLegion); // ctx.drawImage(img, 9, 720  , 40, 51, x, y, 40, 51);
@@ -292,7 +307,13 @@ var backwardIndex = 0;
 var upwardIndex = 0;
 var downwardIndex = 0;
 var enemiesIndex = 0;
-var health = 500;
+var deathIndex = 0;
+var tauntIndex = 0;
+var dead = false;
+var health = 10;
+var healthbar = document.getElementById('healthbar');
+healthbar.style.width = "".concat(health, "%");
+healthbar.append("Health");
 
 function init() {
   // initialize game
@@ -305,67 +326,80 @@ function init() {
     ctx.drawImage(img, 0, 0, img.width, img.height, // source rectangle
     0, 0, canvas.width, canvas.height);
 
-    if (leftPressed) {
-      if (collisionCheck(enemyArray, playerBox) == false) {
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
-      } else {
-        x += 4;
-
-        if (upPressed) {
-          y += 4;
-        }
-
-        if (downPressed) {
-          y -= 4;
-        }
-
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
-      }
-    } else if (rightPressed) {
-      if (collisionCheck(enemyArray, playerBox) == false) {
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
-      } else {
-        x -= 4;
-
-        if (upPressed) {
-          y += 4;
-        }
-
-        if (downPressed) {
-          y -= 4;
-        }
-
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
-      }
-    } else if (upPressed) {
-      if (collisionCheck(enemyArray, playerBox) == false) {
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
-      } else {
-        y += 4;
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
-      }
-    } else if (downPressed) {
-      if (collisionCheck(enemyArray, playerBox) == false) {
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
-      } else {
-        y -= 4;
-        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
-      }
-    } else {
-      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y);
+    if (health <= 0) {
+      dead = true;
     }
 
-    enemiesIndex === 8 ? enemiesIndex = 0 : enemiesIndex += 1;
-    enemyArray.forEach(function (ske) {
-      ske.move(enemiesIndex);
-      collisionCheck(enemyArray, playerBox);
-      playerBox = {
-        x: x,
-        y: y,
-        width: 40,
-        height: 53
-      };
-    });
+    if (!dead) {
+      if (leftPressed) {
+        if (collisionCheck(enemyArray, playerBox) == false) {
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
+        } else {
+          x += 4;
+
+          if (upPressed) {
+            y += 4;
+          }
+
+          if (downPressed) {
+            y -= 4;
+          }
+
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
+        }
+      } else if (rightPressed) {
+        if (collisionCheck(enemyArray, playerBox) == false) {
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
+        } else {
+          x -= 4;
+
+          if (upPressed) {
+            y += 4;
+          }
+
+          if (downPressed) {
+            y -= 4;
+          }
+
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
+        }
+      } else if (upPressed) {
+        if (collisionCheck(enemyArray, playerBox) == false) {
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
+        } else {
+          y += 4;
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
+        }
+      } else if (downPressed) {
+        if (collisionCheck(enemyArray, playerBox) == false) {
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
+        } else {
+          y -= 4;
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
+        }
+      } else {
+        Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y);
+      }
+
+      enemiesIndex === 8 ? enemiesIndex = 0 : enemiesIndex += 1;
+      enemyArray.forEach(function (ske) {
+        ske.move(enemiesIndex);
+        collisionCheck(enemyArray, playerBox);
+        playerBox = {
+          x: x,
+          y: y,
+          width: 40,
+          height: 53
+        };
+      });
+    } else {
+      Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, deathIndex, 'dead');
+      deathIndex === 5 ? deathIndex = 5 : deathIndex += 1;
+      enemyArray.forEach(function (ske) {
+        ske.taunt(tauntIndex);
+        tauntIndex === 7 ? tauntIndex = 0 : tauntIndex += 1;
+      });
+    }
   };
 
   function loop() {
@@ -385,7 +419,7 @@ function init() {
       downwardIndex = 0;
     } else if (downPressed) {
       y < canvas.height - 53 ? y += 4 : y;
-      downwardIndex === 8 ? downwardIndex = 0 : downwardIndex += 1;
+      downwardIndex === 6 ? downwardIndex = 0 : downwardIndex += 1;
       upwardIndex = 0;
     }
   }
@@ -398,7 +432,7 @@ function collisionCheck(enemyArray, playerBox) {
   var flag = false;
   enemyArray.forEach(function (enemy) {
     if (collision(enemy.box(), playerBox) == true) {
-      console.log(health -= 1);
+      healthbar.style.width = "".concat(health -= 0.05, "%");
       flag = true;
     }
   });
@@ -413,8 +447,8 @@ function collision(box1, playerBox) {
   return false;
 }
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("keydown", keyDownHandler, true);
+document.addEventListener("keyup", keyUpHandler, true); // document.addEventListener("mouseClick", mouseMoveHandler, false);
 
 function keyDownHandler(e) {
   switch (e.keyCode) {
