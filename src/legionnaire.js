@@ -15,6 +15,7 @@ function loadImage(url){
 }
 
 function drawLegion(x,y, index,direction){
+
     img.src = '../images/background/Legionnaire.png';
     img.onload = function() {
         if (direction === 'backward'){
@@ -30,7 +31,7 @@ function drawLegion(x,y, index,direction){
             lastRender = renderdown;
             lastRender(x,y,index);
         }else{
-            
+          
             lastRender(x,y);
         }
     ctx.beginPath();
