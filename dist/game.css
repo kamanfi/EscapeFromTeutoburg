@@ -1,6 +1,38 @@
+
+
 #healthbar{
     position: absolute;
     background-color: rgb(121, 48, 48);
     color: green;
+    font-weight: 600;
+}
+ 
+body{
+    background-image: url('../images/background/treeRain.gif');
+    background-size: cover;
 }
 
+#hidden{
+    background-color: red;
+    display: absolute;
+    top: 1000px;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+#show{
+    display: block;
+}
+
+#start{
+    display: block; 
+    margin: 3% auto;
+    font-family: 'Nosifer', cursive;
+    color: black;
+    font-size: 12px
+}
+
+#survive{
+    color: red;
+}

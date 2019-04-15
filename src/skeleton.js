@@ -20,7 +20,7 @@ let  y = Math.floor(Math.random() * 700);
 export default class Skeleton{
     
     constructor(){
-        this.x = Math.floor( 300+ Math.random() * 900);
+        this.x = Math.floor( 500+ Math.random() * 900);
         this.y  = Math.floor(Math.random() * 700);
         this.img = new Image();
         this.img.src = '../images/background/skeleton.png';
@@ -33,7 +33,7 @@ export default class Skeleton{
 
             ctx.drawImage(this.img, backward[index], 589 , 40, 53,this.x, this.y, 40, 53);    
             ctx.beginPath();
-            ctx.rect(this.x, this.y, 40, 53);
+            ctx.rect(this.x, this.y, 40-10, 53-10);
             ctx.stroke();
 
     }
@@ -45,7 +45,7 @@ export default class Skeleton{
     }
 
     taunt(index){
-
+        
         ctx.drawImage(this.img, Math.floor(backward[index]), 144 , 40, 53,this.x, this.y, 40, 53);    
         ctx.beginPath();
         ctx.rect(this.x, this.y, 40, 53);
@@ -54,7 +54,7 @@ export default class Skeleton{
     }
 
     box(){
-      return {x: this.x, y: this.y, width: 40, height: 53}
+      return {x: this.x, y: this.y, width: 40-10, height: 53-10}
     }
 }
 
