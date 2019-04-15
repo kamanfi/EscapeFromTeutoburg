@@ -23,7 +23,7 @@ export default class Skeleton{
         this.x = Math.floor( 500+ Math.random() * 900);
         this.y  = Math.floor(Math.random() * 700);
         this.img = new Image();
-        this.img.src = '../images/background/skeleton.png';
+        this.img.src = './images/background/skeleton.png';
         this.img.onload = function() {
             //loads image
             };

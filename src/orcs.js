@@ -23,7 +23,7 @@ export default class Orc{
         this.x = Math.floor( Math.random() * 900);
         this.y  = Math.floor( Math.random() * 300);
         this.img = new Image();
-        this.img.src = '../images/background/orc.png';
+        this.img.src = './images/background/orc.png';
         this.img.onload = function() {
             //loads image
             };

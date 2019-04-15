@@ -1,11 +1,11 @@
-import { get } from "https";
+
 
 let img = new Image();
 // img.src = 'https://opengameart.org/sites/default/files/Green-Cap-Character-16x18.png';
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 let imgCache ={};
-img.src = '../images/background/Legionnaire.png';
+img.src = './images/background/Legionnaire.png';
 
 img.onload = function(){
     imgCache[img] = img;
