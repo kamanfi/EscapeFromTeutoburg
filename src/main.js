@@ -150,10 +150,10 @@ let enemyArray=[];
                     enemiesIndex === 8 ? enemiesIndex =0 : enemiesIndex +=1;
                 
                 
-                    enemyArray.forEach(ske => {
-                        ske.move(enemiesIndex);
-                        collisionCheck(enemyArray, playerBox);  
-                        playerBox = {x: x, y: y, width: 40, height: 53}
+                    enemyArray.forEach(enemy => {
+                            enemy.move(enemiesIndex);
+                            collisionCheck(enemyArray, playerBox);  
+                            playerBox = {x: x, y: y, width: 40, height: 53}
                     });
                 }else{
                     drawLegion(x,y,deathIndex,'dead');

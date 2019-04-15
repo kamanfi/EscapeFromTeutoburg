@@ -354,8 +354,8 @@ document.getElementById('start').addEventListener('click', function () {
         }
 
         enemiesIndex === 8 ? enemiesIndex = 0 : enemiesIndex += 1;
-        enemyArray.forEach(function (ske) {
-          ske.move(enemiesIndex);
+        enemyArray.forEach(function (enemy) {
+          enemy.move(enemiesIndex);
           collisionCheck(enemyArray, playerBox);
           playerBox = {
             x: x,
@@ -556,10 +556,11 @@ function () {
   function Orc() {
     _classCallCheck(this, Orc);
 
-    this.x = Math.floor(Math.random() * 900);
-    this.y = Math.floor(Math.random() * 300);
+    this.x = Math.floor(500 + Math.random() * 900);
+    this.y = Math.floor(Math.random() * 700);
     this.img = new Image();
     this.img.src = './images/background/orc.png';
+    this.speed = 2;
 
     this.img.onload = function () {//loads image
     };
@@ -568,24 +569,31 @@ function () {
   _createClass(Orc, [{
     key: "render",
     value: function render(index) {
-      ctx.drawImage(this.img, down[index], 651, 40, 53, this.x, this.y, 40, 53);
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, 40 - 10, 53 - 10);
-      ctx.stroke();
+      if (this.speed == -4) {
+        ctx.drawImage(this.img, down[index], 595, 40, 53, this.x, this.y, 40, 53);
+      } else {
+        ctx.drawImage(this.img, down[index], 651, 40, 53, this.x, this.y, 40, 53);
+      } // ctx.beginPath();
+      // ctx.rect(this.x, this.y, 40-10, 53-10);
+      // ctx.stroke();
+
     }
   }, {
     key: "move",
     value: function move(index) {
-      this.y += 2;
+      if (this.x > 1200) {
+        this.speed = -4;
+      }
+
+      this.x += this.speed;
       this.render(index);
     }
   }, {
     key: "taunt",
     value: function taunt(index) {
-      ctx.drawImage(this.img, Math.floor(down[index]), 144, 40, 53, this.x, this.y, 40, 53);
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, 40, 53);
-      ctx.stroke();
+      ctx.drawImage(this.img, Math.floor(down[index]), 651, 40, 53, this.x, this.y, 40, 53); // ctx.beginPath();
+      // ctx.rect(this.x, this.y, 40, 53);
+      // ctx.stroke();
     }
   }, {
     key: "box",
