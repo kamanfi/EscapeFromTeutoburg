@@ -206,55 +206,82 @@ __webpack_require__.r(__webpack_exports__);
 
 
  // import drawBox from './invisbleBoxes';
+// initialState
 
-var level = 1;
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var x = 0;
 var y = 350;
 var speed = 6;
+var level = 1;
+var playerBox = {
+  x: x,
+  y: y,
+  width: 40,
+  height: 53
+};
+var playAgainBox = {
+  x: 414,
+  y: 330,
+  width: 90,
+  height: 18
+};
+var leftPressed = false;
+var rightPressed = false;
+var upPressed = false;
+var downPressed = false;
+var forwardIndex = 0;
+var backwardIndex = 0;
+var upwardIndex = 0;
+var downwardIndex = 0;
+var enemiesIndex = 0;
+var deathIndex = 0;
+var tauntIndex = 0;
+var dmg = 4.8;
+var dead = false;
+var enemyArray = [];
 document.getElementById('start').addEventListener('click', function () {
-  var enemyArray = [];
+  document.getElementById('start').style.display = "none";
 
-  if (level == 1) {
-    for (var index = 0; index < 23; index++) {
-      enemyArray.push(new _skeleton__WEBPACK_IMPORTED_MODULE_1__["default"]());
+  function loadEnemy() {
+    enemyArray = [];
+
+    if (level == 1) {
+      for (var index = 0; index < 23; index++) {
+        enemyArray.push(new _skeleton__WEBPACK_IMPORTED_MODULE_1__["default"]());
+      }
+    } else if (level == 2) {
+      for (var _index = 0; _index < 35; _index++) {
+        enemyArray.push(new _orcs__WEBPACK_IMPORTED_MODULE_2__["default"]());
+      }
     }
-  } else if (level == 2) {
-    for (var _index = 0; _index < 35; _index++) {
-      enemyArray.push(new _orcs__WEBPACK_IMPORTED_MODULE_2__["default"]());
-    }
-  } // let collisionCheckBox =[[14,200], [14,340], [104,200], [140,340]];
+  }
+
+  function resetState() {
+    leftPressed = false;
+    rightPressed = false;
+    upPressed = false;
+    downPressed = false;
+    forwardIndex = 0;
+    backwardIndex = 0;
+    upwardIndex = 0;
+    downwardIndex = 0;
+    enemiesIndex = 0;
+    deathIndex = 0;
+    tauntIndex = 0;
+    dmg = 4.8;
+    dead = false;
+    health = 10;
+    x = 0;
+    y = 350;
+    loadEnemy();
+  }
+
+  resetState(); // let collisionCheckBox =[[14,200], [14,340], [104,200], [140,340]];
   // // let playerBoxBox=[[x,y], [x,y+53] , [x+40,y,], [x+40,y+53]];
   // let box1 = {x: 14, y: 200, width: 90, height: 140};
+  //game state
 
-
-  var playerBox = {
-    x: x,
-    y: y,
-    width: 40,
-    height: 53
-  };
-  var playAgainBox = {
-    x: 414,
-    y: 330,
-    width: 90,
-    height: 18
-  }; //game state
-
-  var leftPressed = false;
-  var rightPressed = false;
-  var upPressed = false;
-  var downPressed = false;
-  var forwardIndex = 0;
-  var backwardIndex = 0;
-  var upwardIndex = 0;
-  var downwardIndex = 0;
-  var enemiesIndex = 0;
-  var deathIndex = 0;
-  var tauntIndex = 0;
-  var dmg = 4.8;
-  var dead = false;
   var health = 10;
   var healthbar = document.getElementById('healthbar');
   healthbar.style.width = "".concat(health, "%");
@@ -339,11 +366,11 @@ document.getElementById('start').addEventListener('click', function () {
         });
       } else {
         var mouseClicked = function mouseClicked(e) {
-          debugger;
           var mousePos = getRelativeCoords(e);
 
           if (collision(mousePos, playAgainBox)) {
-            document.location.reload();
+            level = 1;
+            resetState();
           }
         };
 
@@ -386,6 +413,11 @@ document.getElementById('start').addEventListener('click', function () {
         downwardIndex === 6 ? downwardIndex = 0 : downwardIndex += 1;
         upwardIndex = 0;
       }
+    }
+
+    if (x > 800) {
+      level += 1;
+      resetState();
     }
 
     loop();

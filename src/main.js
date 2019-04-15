@@ -2,56 +2,85 @@ import drawLegion from './legionnaire';
 import Skeleton from './skeleton';
 import Orc from './orcs'; 
 // import drawBox from './invisbleBoxes';
+
+// initialState
+let canvas = document.getElementById("myCanvas");
+let ctx = canvas.getContext("2d");
+let x = 0;
+let y = 350;
+let speed = 6;
 let level =1;
+let playerBox = {x: x, y: y, width: 40, height: 53};
+let playAgainBox = {x: 414, y: 330, width: 90, height: 18};
+
+let leftPressed = false;
+let rightPressed = false;
+let upPressed = false;
+let downPressed = false;
+let forwardIndex = 0;
+let backwardIndex = 0;
+let upwardIndex = 0;
+let downwardIndex = 0;
+let enemiesIndex =0;
+let deathIndex =0;
+let tauntIndex = 0;
+let dmg = 4.8;
+let dead = false;
+let enemyArray=[];
+
+
+    document.getElementById('start').addEventListener('click', () => {
+        document.getElementById('start').style.display=("none");
    
-    let canvas = document.getElementById("myCanvas");
-    let ctx = canvas.getContext("2d");
-    let x = 0;
-    let y = 350;
-    
-    let speed = 6;
-    
 
-
-
-
-document.getElementById('start').addEventListener('click', () => {
-    const enemyArray =[];
-    
-
-    if (level == 1){
-          for (let index = 0; index < 23; index++) {
-        enemyArray.push(new Skeleton());
+    function loadEnemy(){
+        enemyArray =[];
+        if (level == 1){
+            for (let index = 0; index < 23; index++) {
+          enemyArray.push(new Skeleton());
+            }
+      }else if(level ==2){
+          for (let index = 0; index < 35; index++) {
+              enemyArray.push(new Orc());
           }
-    }else if(level ==2){
-        for (let index = 0; index < 35; index++) {
-            enemyArray.push(new Orc());
-        }
-    }   
+      }   
+    }
     
-    
-    
+    function resetState(){
+         leftPressed = false;
+         rightPressed = false;
+         upPressed = false;
+         downPressed = false;
+         forwardIndex = 0;
+         backwardIndex = 0;
+         upwardIndex = 0;
+         downwardIndex = 0;
+         enemiesIndex =0;
+         deathIndex =0;
+         tauntIndex = 0;
+         dmg = 4.8;
+         dead = false;
+         health = 10;
+         x = 0;
+         y = 350;
+         loadEnemy();
+    }
+   
+ 
+    resetState();
+
+
     // let collisionCheckBox =[[14,200], [14,340], [104,200], [140,340]];
     // // let playerBoxBox=[[x,y], [x,y+53] , [x+40,y,], [x+40,y+53]];
     // let box1 = {x: 14, y: 200, width: 90, height: 140};
-    let playerBox = {x: x, y: y, width: 40, height: 53};
-    let playAgainBox = {x: 414, y: 330, width: 90, height: 18};
+
+
+
     //game state
-    let leftPressed = false;
-    let rightPressed = false;
-    let upPressed = false;
-    let downPressed = false;
-    let forwardIndex = 0;
-    let backwardIndex = 0;
-    let upwardIndex = 0;
-    let downwardIndex = 0;
-    let enemiesIndex =0;
-    let deathIndex =0;
-    let tauntIndex = 0;
-    let dmg = 4.8;
-    let dead = false;
+
+
+
     let health = 10;
-    
     let healthbar = document.getElementById('healthbar');
     healthbar.style.width = `${health}%`;
     
@@ -60,8 +89,8 @@ document.getElementById('start').addEventListener('click', () => {
     healthbar.append(`Health`);
     
     function init (){ // initialize game
-
-        const background = '../images/background/emptyField.png';
+        
+        const background = './images/background/emptyField.png';
         const img = new Image();
         img.src = background;
         img.onload = function () {
@@ -147,16 +176,17 @@ document.getElementById('start').addEventListener('click', () => {
                     document.addEventListener("click", mouseClicked, false);
     
                     function mouseClicked(e){
-                        debugger
+                        
                         let mousePos = getRelativeCoords(e);
                         if (collision(mousePos, playAgainBox)) {
-                            
-                            document.location.reload();
+                            level =1;
+                            resetState();
+                         
                         }
+
                     }
+                    
                 }
-                
-               
               
         };
     
@@ -184,9 +214,12 @@ document.getElementById('start').addEventListener('click', () => {
                 }
     
             }
-             
+         
+            if ( x > 800){
+                level +=1;
+                resetState();
+            }
         loop();
-        
         requestAnimationFrame(init);
         
     }
