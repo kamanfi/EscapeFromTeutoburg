@@ -141,11 +141,11 @@ function drawLegion(x, y, index, direction) {
       renderDeath(x, y, index);
     } else {
       lastRender(x, y);
-    }
+    } // ctx.beginPath();
+    // ctx.rect(x, y, 40, 53);
+    // ctx.stroke();
 
-    ctx.beginPath();
-    ctx.rect(x, y, 40, 53);
-    ctx.stroke();
+
     ctx.fillRect(x, y - 10, health -= dmg, 3);
     ctx.beginPath();
     ctx.fillStyle = '#FF0000';
@@ -303,6 +303,8 @@ document.getElementById('start').addEventListener('click', function () {
       }
 
       if (!dead) {
+        console.log("MOVING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         if (leftPressed) {
           if (collisionCheck(enemyArray, playerBox) == false) {
             Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
@@ -374,6 +376,8 @@ document.getElementById('start').addEventListener('click', function () {
           }
         };
 
+        console.log(dead);
+        console.log(health);
         Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, deathIndex, 'dead');
         deathIndex === 5 ? deathIndex = 5 : deathIndex += 1;
         enemyArray.forEach(function (ske) {
@@ -385,8 +389,8 @@ document.getElementById('start').addEventListener('click', function () {
         ctx.fillText("GAME OVER", 450, 300);
         ctx.fillStyle = '#FFFFFF';
         ctx.font = "12px Nosifer";
-        ctx.fillText("you failed Rome", 450, 310);
-        ctx.fillText("restart?", 450, 330);
+        ctx.fillText("you failed Rome", 450, 330);
+        ctx.fillText("restart?", 450, 350);
         ctx.textAlign = "center";
         ctx.fillStyle = 'rgba(255, 255, 255, .4)';
         document.addEventListener("click", mouseClicked, false);
@@ -394,24 +398,26 @@ document.getElementById('start').addEventListener('click', function () {
     };
 
     function loop() {
-      if (leftPressed) {
-        x > 0 ? x -= speed : x;
-        backwardIndex === 8 ? backwardIndex = 0 : backwardIndex += 1;
-        forwardIndex = 0;
-      } else if (rightPressed) {
-        x < canvas.width - 40 ? x += speed : x;
-        forwardIndex === 8 ? forwardIndex = 0 : forwardIndex += 1;
-        backwardIndex = 0;
-      }
+      if (!dead) {
+        if (leftPressed) {
+          x > 0 ? x -= speed : x;
+          backwardIndex === 8 ? backwardIndex = 0 : backwardIndex += 1;
+          forwardIndex = 0;
+        } else if (rightPressed) {
+          x < canvas.width - 40 ? x += speed : x;
+          forwardIndex === 8 ? forwardIndex = 0 : forwardIndex += 1;
+          backwardIndex = 0;
+        }
 
-      if (upPressed) {
-        y > 0 ? y -= speed : y;
-        upwardIndex === 8 ? upwardIndex = 0 : upwardIndex += 1;
-        downwardIndex = 0;
-      } else if (downPressed) {
-        y < canvas.height - 53 ? y += speed : y;
-        downwardIndex === 6 ? downwardIndex = 0 : downwardIndex += 1;
-        upwardIndex = 0;
+        if (upPressed) {
+          y > 0 ? y -= speed : y;
+          upwardIndex === 8 ? upwardIndex = 0 : upwardIndex += 1;
+          downwardIndex = 0;
+        } else if (downPressed) {
+          y < canvas.height - 53 ? y += speed : y;
+          downwardIndex === 6 ? downwardIndex = 0 : downwardIndex += 1;
+          upwardIndex = 0;
+        }
       }
     }
 
@@ -665,10 +671,9 @@ function () {
   _createClass(Skeleton, [{
     key: "render",
     value: function render(index) {
-      ctx.drawImage(this.img, backward[index], 589, 40, 53, this.x, this.y, 40, 53);
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, 40 - 10, 53 - 10);
-      ctx.stroke();
+      ctx.drawImage(this.img, backward[index], 589, 40, 53, this.x, this.y, 40, 53); // ctx.beginPath();
+      // ctx.rect(this.x, this.y, 40-10, 53-10);
+      // ctx.stroke();
     }
   }, {
     key: "move",
@@ -679,10 +684,9 @@ function () {
   }, {
     key: "taunt",
     value: function taunt(index) {
-      ctx.drawImage(this.img, Math.floor(backward[index]), 144, 40, 53, this.x, this.y, 40, 53);
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, 40, 53);
-      ctx.stroke();
+      ctx.drawImage(this.img, Math.floor(backward[index]), 144, 40, 53, this.x, this.y, 40, 53); // ctx.beginPath();
+      // ctx.rect(this.x, this.y, 40, 53);
+      // ctx.stroke();
     }
   }, {
     key: "box",

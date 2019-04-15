@@ -32,9 +32,9 @@ export default class Skeleton{
     render(index){
 
             ctx.drawImage(this.img, backward[index], 589 , 40, 53,this.x, this.y, 40, 53);    
-            ctx.beginPath();
-            ctx.rect(this.x, this.y, 40-10, 53-10);
-            ctx.stroke();
+            // ctx.beginPath();
+            // ctx.rect(this.x, this.y, 40-10, 53-10);
+            // ctx.stroke();
 
     }
 
@@ -47,9 +47,9 @@ export default class Skeleton{
     taunt(index){
         
         ctx.drawImage(this.img, Math.floor(backward[index]), 144 , 40, 53,this.x, this.y, 40, 53);    
-        ctx.beginPath();
-        ctx.rect(this.x, this.y, 40, 53);
-        ctx.stroke();
+        // ctx.beginPath();
+        // ctx.rect(this.x, this.y, 40, 53);
+        // ctx.stroke();
 
     }
 

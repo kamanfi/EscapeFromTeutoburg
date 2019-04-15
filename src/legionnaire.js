@@ -52,9 +52,9 @@ function drawLegion(x,y, index,direction, dmg=0){
     }
 
         
-    ctx.beginPath();
-    ctx.rect(x, y, 40, 53);
-    ctx.stroke();
+    // ctx.beginPath();
+    // ctx.rect(x, y, 40, 53);
+    // ctx.stroke();
 
     ctx.fillRect(x,y-10,health-=dmg,3);
     ctx.beginPath();
