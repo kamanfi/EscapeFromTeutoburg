@@ -222,9 +222,9 @@ var playerBox = {
 };
 var playAgainBox = {
   x: 414,
-  y: 330,
+  y: 350,
   width: 90,
-  height: 18
+  height: 10
 };
 var leftPressed = false;
 var rightPressed = false;

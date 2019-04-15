@@ -11,7 +11,7 @@ let y = 350;
 let speed = 6;
 let level =1;
 let playerBox = {x: x, y: y, width: 40, height: 53};
-let playAgainBox = {x: 414, y: 330, width: 90, height: 18};
+let playAgainBox = {x: 414, y: 350, width: 90, height: 10};
 
 let leftPressed = false;
 let rightPressed = false;
