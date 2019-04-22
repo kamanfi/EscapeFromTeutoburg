@@ -144,15 +144,14 @@ function drawLegion(x, y, index, direction) {
       renderSlash(x, y, index);
     } else {
       lastRender(x, y);
-    } // ctx.beginPath();
-    // ctx.rect(x, y, 40, 53);
+    } // // ctx.beginPath();
+    // // ctx.rect(x, y, 40, 53);
+    // // ctx.stroke();
+    // ctx.fillRect(x,y-10,health-=dmg,3);
+    // ctx.beginPath();
+    // ctx.fillStyle='#FF0000';
     // ctx.stroke();
 
-
-    ctx.fillRect(x, y - 10, health -= dmg, 3);
-    ctx.beginPath();
-    ctx.fillStyle = '#FF0000';
-    ctx.stroke();
   } else {
     getImage();
   }
@@ -256,11 +255,11 @@ document.getElementById('start').addEventListener('click', function () {
   function loadEnemy() {
     enemyArray = [];
 
-    if (level == 1) {
+    if (level % 2 != 0) {
       for (var index = 0; index < 23; index++) {
         enemyArray.push(new _skeleton__WEBPACK_IMPORTED_MODULE_1__["default"]());
       }
-    } else if (level == 2) {
+    } else {
       for (var _index = 0; _index < 45; _index++) {
         enemyArray.push(new _orcs__WEBPACK_IMPORTED_MODULE_2__["default"]());
       }
@@ -292,14 +291,16 @@ document.getElementById('start').addEventListener('click', function () {
   // let box1 = {x: 14, y: 200, width: 90, height: 140};
   //game state
 
-  var health = 10;
-  var healthbar = document.getElementById('healthbar');
-  healthbar.style.width = "".concat(health, "%");
-  healthbar.append("Health");
+  var health = 10; // let healthbar = document.getElementById('healthbar');
+  // healthbar.style.width = `${health}%`;
+  // healthbar.append(`Health`);
 
   function init() {
     // initialize game
     var background = './images/background/emptyField.png';
+    ctx.fillStyle = '#FF0000';
+    ctx.font = "16px Nosifer";
+    ctx.fillText("Level-".concat(level), 450, 30);
     var img = new Image();
     img.src = background;
 
@@ -444,7 +445,8 @@ document.getElementById('start').addEventListener('click', function () {
     var flag = false;
     enemyArray.forEach(function (enemy) {
       if (collision(enemy.box(), playerBox) == true) {
-        healthbar.style.width = "".concat(health -= 0.05, "%");
+        // healthbar.style.width = `${health-=0.05}%`;
+        health -= 0.05;
         flag = true;
       }
     });

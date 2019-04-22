@@ -53,17 +53,15 @@ function drawLegion(x,y, index,direction, dmg=0){
         }
         else{
             lastRender(x,y);
-    }
+            }   
+    // // ctx.beginPath();
+    // // ctx.rect(x, y, 40, 53);
+    // // ctx.stroke();
 
-        
+    // ctx.fillRect(x,y-10,health-=dmg,3);
     // ctx.beginPath();
-    // ctx.rect(x, y, 40, 53);
+    // ctx.fillStyle='#FF0000';
     // ctx.stroke();
-
-    ctx.fillRect(x,y-10,health-=dmg,3);
-    ctx.beginPath();
-    ctx.fillStyle='#FF0000';
-    ctx.stroke();
     }else{
         getImage();
     }

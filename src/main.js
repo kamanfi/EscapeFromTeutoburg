@@ -36,11 +36,11 @@ let enemyArray=[];
 
     function loadEnemy(){
         enemyArray =[];
-        if (level == 1){
+        if (level % 2 != 0){
             for (let index = 0; index < 23; index++) {
           enemyArray.push(new Skeleton());
             }
-      }else if(level ==2){
+      }else {
           for (let index = 0; index < 45; index++) {
               enemyArray.push(new Orc());
           }
@@ -82,16 +82,22 @@ let enemyArray=[];
 
 
     let health = 10;
-    let healthbar = document.getElementById('healthbar');
-    healthbar.style.width = `${health}%`;
+    // let healthbar = document.getElementById('healthbar');
+    // healthbar.style.width = `${health}%`;
     
     
     
-    healthbar.append(`Health`);
+    // healthbar.append(`Health`);
     
     function init (){ // initialize game
         
         const background = './images/background/emptyField.png';
+        ctx.fillStyle='#FF0000';
+        ctx.font ="16px Nosifer";
+        ctx.fillText(`Level-${level}`, 450,30);
+
+
+
         const img = new Image();
         img.src = background;
         img.onload = function () {
@@ -237,7 +243,8 @@ let enemyArray=[];
     
             enemyArray.forEach((enemy) =>{
                 if (collision(enemy.box(),playerBox ) == true){
-                    healthbar.style.width = `${health-=0.05}%`;
+                    // healthbar.style.width = `${health-=0.05}%`;
+                    health-=0.05;
                     flag = true;
                 }
             });
