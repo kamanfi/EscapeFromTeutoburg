@@ -23,7 +23,7 @@ In addition, this project will include:
 This app will consist of a single screen with the game view in the middle , about modal below that,nav links to the Github, my LinkedIn and Website on the right and a highscore board on the right 
 ![wireframes](https://wireframe.cc/cmnz1M)
 
-![](images/ReadME/skeleton.png)
+
 ### Architecture and Technologies
 
 This project will be implemented with the following technologies:
@@ -40,7 +40,7 @@ In addition to the entry file, there will be four scripts involved in this proje
 `Germanic Soldiers.js` and `Boss.js`: this script will draw the Germanic Soldiers/Boss and implement their logic,
 
 ### Implementation Timeline
-
+![](images/ReadME/skeleton.png)
 **Day 1**: Setup all necessary Node modules, including getting webpack up and running.
 
 - Get a green bundle with `Webpack`
