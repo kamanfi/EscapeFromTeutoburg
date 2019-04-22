@@ -1,13 +1,12 @@
 ## EscpareFromTeutoburg
 
-![](/app/assets/images/Readme/logIn.png)
+![](images/ReadME/Main.png)
 
 
 ### Background
 
 EscpareFromTeutoburg is a sprite based game of survival, a lone legionnaire nust survived the hordes of monsters as he tries to make it back to Rome
 
- [link to Google!](app/assets/images/Readme/logIn.png)
 
 ### Functionality & MVP  
 
@@ -18,7 +17,7 @@ EscpareFromTeutoburg is a sprite based game of survival, a lone legionnaire nust
 In addition, this project will include:
 
 - [ ] A production README
-
+![](images/ReadME/skeleton.png)
 ### Wireframes
 
 This app will consist of a single screen with the game view in the middle , about modal below that,nav links to the Github, my LinkedIn and Website on the right and a highscore board on the right 
