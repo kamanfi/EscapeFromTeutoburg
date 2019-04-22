@@ -1,22 +1,23 @@
 ## EscpareFromTeutoburg
 
+![](images/ReadME/Main.png)
+
+
 ### Background
 
-EscpareFromTeutoburg is a sprite based game of survival, a lone legionnaire nust survived the hordes of germanic soldiers as he tries to make it back to Rome
+EscpareFromTeutoburg is a sprite based game of survival, a lone legionnaire nust survived the hordes of monsters as he tries to make it back to Rome
 
 
 ### Functionality & MVP  
 
-- [ ] Use the mouse to move the legionnaire and avoid germanic soldiers
+- [ ] Use the keyBoard to move the legionnaire and avoid monsters 
 - [ ] Healthbar that decreases if legionnair comes in contact with germanic soldiers
 - [ ] Periodically spawns a boss that will be harder to avoid
-- [ ] Firebase DB for high scores with user name input
 
 In addition, this project will include:
 
-- [ ] An About modal describing the historical background and rules of the game
 - [ ] A production README
-
+![](images/ReadME/skeleton.png)
 ### Wireframes
 
 This app will consist of a single screen with the game view in the middle , about modal below that,nav links to the Github, my LinkedIn and Website on the right and a highscore board on the right 
