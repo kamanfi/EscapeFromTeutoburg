@@ -49,7 +49,7 @@ export default class Orc{
     move(index){
         
         if(this.x > 1200){
-            this.speed = -6
+            this.speed = Math.floor( -6 + Math.random() * -10);
         }
         this.x +=this.speed;
         this.render(index);

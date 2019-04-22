@@ -21,6 +21,7 @@ let forwardIndex = 0;
 let backwardIndex = 0;
 let upwardIndex = 0;
 let downwardIndex = 0;
+let slashIndex = 0;
 let enemiesIndex =0;
 let deathIndex =0;
 let tauntIndex = 0;
@@ -40,7 +41,7 @@ let enemyArray=[];
           enemyArray.push(new Skeleton());
             }
       }else if(level ==2){
-          for (let index = 0; index < 35; index++) {
+          for (let index = 0; index < 45; index++) {
               enemyArray.push(new Orc());
           }
       }   
@@ -305,6 +306,12 @@ let enemyArray=[];
             default:
                 break;
         }  
+    }
+    document.addEventListener("click", mouseClicked2, false);
+    function mouseClicked2(e){
+        console.log('what');
+        drawLegion(x,y,slashIndex,'slash');
+        slashIndex == 5 ? slashIndex=0 : slashIndex +=1
     }
     
     init();

@@ -16,6 +16,7 @@ let backward = [16,79,143,208,272,334,402,467,530];
 let up = [6,69,131,198,261,327,391,456,518];
 let down = [6,69,131,198,261,327,391,456,518];
 let death = [6,69,131,198,261,327,391,456,518];
+let slash = [70,256,454,638,833,1026];
 let lastRender = renderforward;
 let health = 40;
 
@@ -47,7 +48,10 @@ function drawLegion(x,y, index,direction, dmg=0){
         }else if (direction === 'dead'){
             
             renderDeath(x,y,index);
-        }else{
+        }else if (direction == 'slash'){
+            renderSlash(x,y,index);
+        }
+        else{
             lastRender(x,y);
     }
 
@@ -82,6 +86,11 @@ function renderdown(x,y,index=0){
 }
 
 function renderDeath(x,y,index=0){
+    ctx.drawImage(imgCache[img] , death[index], 1291 , 40, 53, x, y, 40, 53);
+}
+
+function renderSlash(x,y,index=0){
+    debugger
     ctx.drawImage(imgCache[img] , death[index], 1291 , 40, 53, x, y, 40, 53);
 }
 

@@ -111,6 +111,7 @@ var backward = [16, 79, 143, 208, 272, 334, 402, 467, 530];
 var up = [6, 69, 131, 198, 261, 327, 391, 456, 518];
 var down = [6, 69, 131, 198, 261, 327, 391, 456, 518];
 var death = [6, 69, 131, 198, 261, 327, 391, 456, 518];
+var slash = [70, 256, 454, 638, 833, 1026];
 var lastRender = renderforward;
 var health = 40; // [7,69,135,201,263,325,390,456,]
 
@@ -139,6 +140,8 @@ function drawLegion(x, y, index, direction) {
       lastRender(x, y, index);
     } else if (direction === 'dead') {
       renderDeath(x, y, index);
+    } else if (direction == 'slash') {
+      renderSlash(x, y, index);
     } else {
       lastRender(x, y);
     } // ctx.beginPath();
@@ -177,6 +180,12 @@ function renderdown(x, y) {
 
 function renderDeath(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  ctx.drawImage(imgCache[img], death[index], 1291, 40, 53, x, y, 40, 53);
+}
+
+function renderSlash(x, y) {
+  var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  debugger;
   ctx.drawImage(imgCache[img], death[index], 1291, 40, 53, x, y, 40, 53);
 }
 
@@ -234,6 +243,7 @@ var forwardIndex = 0;
 var backwardIndex = 0;
 var upwardIndex = 0;
 var downwardIndex = 0;
+var slashIndex = 0;
 var enemiesIndex = 0;
 var deathIndex = 0;
 var tauntIndex = 0;
@@ -251,7 +261,7 @@ document.getElementById('start').addEventListener('click', function () {
         enemyArray.push(new _skeleton__WEBPACK_IMPORTED_MODULE_1__["default"]());
       }
     } else if (level == 2) {
-      for (var _index = 0; _index < 35; _index++) {
+      for (var _index = 0; _index < 45; _index++) {
         enemyArray.push(new _orcs__WEBPACK_IMPORTED_MODULE_2__["default"]());
       }
     }
@@ -515,6 +525,14 @@ document.getElementById('start').addEventListener('click', function () {
     }
   }
 
+  document.addEventListener("click", mouseClicked2, false);
+
+  function mouseClicked2(e) {
+    console.log('what');
+    Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, slashIndex, 'slash');
+    slashIndex == 5 ? slashIndex = 0 : slashIndex += 1;
+  }
+
   init();
 }); // A = 65
 // W = 87
@@ -588,7 +606,7 @@ function () {
     key: "move",
     value: function move(index) {
       if (this.x > 1200) {
-        this.speed = -6;
+        this.speed = Math.floor(-6 + Math.random() * -10);
       }
 
       this.x += this.speed;
