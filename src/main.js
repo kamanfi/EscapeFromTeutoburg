@@ -1,6 +1,7 @@
 import drawLegion from './legionnaire';
 import Skeleton from './skeleton';
 import Orc from './orcs'; 
+import spellCaster from './spellCaster'
 // import drawBox from './invisbleBoxes';
 
 // initialState
@@ -32,11 +33,15 @@ let enemyArray=[];
 
     document.getElementById('start').addEventListener('click', () => {
         document.getElementById('start').style.display=("none");
-   
-
+        document.getElementById('EPIC').play();
+    
     function loadEnemy(){
         enemyArray =[];
-        if (level % 2 != 0){
+        if (level === 3){
+            for (let index = 0; index < 33; index++) {
+                enemyArray.push(new spellCaster());
+                  }
+        }else if (level % 2 != 0){
             for (let index = 0; index < 23; index++) {
           enemyArray.push(new Skeleton());
             }
@@ -61,7 +66,7 @@ let enemyArray=[];
          tauntIndex = 0;
          dmg = 4.8;
          dead = false;
-         health = 10;
+         health = .2;
          x = 0;
          y = 350;
          loadEnemy();
@@ -110,7 +115,6 @@ let enemyArray=[];
                 }
                 
                 if (!dead){
-                    console.log("MOVING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     if (leftPressed){
                         if (collisionCheck(enemyArray,playerBox) == false){
                         drawLegion(x,y,backwardIndex,'backward');
@@ -164,8 +168,7 @@ let enemyArray=[];
                             playerBox = {x: x, y: y, width: 40, height: 53}
                     });
                 }else{
-                    console.log(dead);
-                    console.log(health);
+
                     
                     drawLegion(x,y,deathIndex,'dead');
                     deathIndex === 5 ? deathIndex =5 : deathIndex +=1;
@@ -316,7 +319,6 @@ let enemyArray=[];
     }
     document.addEventListener("click", mouseClicked2, false);
     function mouseClicked2(e){
-        console.log('what');
         drawLegion(x,y,slashIndex,'slash');
         slashIndex == 5 ? slashIndex=0 : slashIndex +=1
     }

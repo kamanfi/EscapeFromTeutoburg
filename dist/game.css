@@ -50,3 +50,7 @@ p{
     display: flex;
     justify-content: space-evenly;
 }
+
+#EPIC{
+    display: none;
+}

@@ -211,6 +211,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _legionnaire__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./legionnaire */ "./src/legionnaire.js");
 /* harmony import */ var _skeleton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./skeleton */ "./src/skeleton.js");
 /* harmony import */ var _orcs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./orcs */ "./src/orcs.js");
+/* harmony import */ var _spellCaster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./spellCaster */ "./src/spellCaster.js");
+
 
 
  // import drawBox from './invisbleBoxes';
@@ -251,16 +253,21 @@ var dead = false;
 var enemyArray = [];
 document.getElementById('start').addEventListener('click', function () {
   document.getElementById('start').style.display = "none";
+  document.getElementById('EPIC').play();
 
   function loadEnemy() {
     enemyArray = [];
 
-    if (level % 2 != 0) {
-      for (var index = 0; index < 23; index++) {
+    if (level === 3) {
+      for (var index = 0; index < 33; index++) {
+        enemyArray.push(new _spellCaster__WEBPACK_IMPORTED_MODULE_3__["default"]());
+      }
+    } else if (level % 2 != 0) {
+      for (var _index = 0; _index < 23; _index++) {
         enemyArray.push(new _skeleton__WEBPACK_IMPORTED_MODULE_1__["default"]());
       }
     } else {
-      for (var _index = 0; _index < 45; _index++) {
+      for (var _index2 = 0; _index2 < 45; _index2++) {
         enemyArray.push(new _orcs__WEBPACK_IMPORTED_MODULE_2__["default"]());
       }
     }
@@ -280,7 +287,7 @@ document.getElementById('start').addEventListener('click', function () {
     tauntIndex = 0;
     dmg = 4.8;
     dead = false;
-    health = 10;
+    health = .2;
     x = 0;
     y = 350;
     loadEnemy();
@@ -314,8 +321,6 @@ document.getElementById('start').addEventListener('click', function () {
       }
 
       if (!dead) {
-        console.log("MOVING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
         if (leftPressed) {
           if (collisionCheck(enemyArray, playerBox) == false) {
             Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
@@ -387,8 +392,6 @@ document.getElementById('start').addEventListener('click', function () {
           }
         };
 
-        console.log(dead);
-        console.log(health);
         Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, deathIndex, 'dead');
         deathIndex === 5 ? deathIndex = 5 : deathIndex += 1;
         enemyArray.forEach(function (ske) {
@@ -530,7 +533,6 @@ document.getElementById('start').addEventListener('click', function () {
   document.addEventListener("click", mouseClicked2, false);
 
   function mouseClicked2(e) {
-    console.log('what');
     Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, slashIndex, 'slash');
     slashIndex == 5 ? slashIndex = 0 : slashIndex += 1;
   }
@@ -705,6 +707,98 @@ function () {
     key: "taunt",
     value: function taunt(index) {
       ctx.drawImage(this.img, Math.floor(backward[index]), 144, 40, 53, this.x, this.y, 40, 53); // ctx.beginPath();
+      // ctx.rect(this.x, this.y, 40, 53);
+      // ctx.stroke();
+    }
+  }, {
+    key: "box",
+    value: function box() {
+      return {
+        x: this.x,
+        y: this.y,
+        width: 40 - 10,
+        height: 53 - 10
+      };
+    }
+  }]);
+
+  return Skeleton;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/spellCaster.js":
+/*!****************************!*\
+  !*** ./src/spellCaster.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Skeleton; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var backward = [16, 79, 143, 208, 272, 334, 402, 467, 530];
+var x = Math.floor(Math.random() * 900);
+var y = Math.floor(Math.random() * 700); // let y = 0;
+// function drawEnemies (index,x=450,y=350){
+//     img.src = '../images/background/skeleton.png';
+//     img.onload = function() {
+//         console.log(index);
+//     ctx.drawImage(img, backward[index], 589 , 40, 53, x, y, 40, 53);    
+//     ctx.beginPath();
+//     ctx.rect(x, y, 40, 53);
+//     ctx.stroke();
+//     };
+// }
+// export default drawEnemies;
+
+var Skeleton =
+/*#__PURE__*/
+function () {
+  function Skeleton() {
+    _classCallCheck(this, Skeleton);
+
+    this.x = Math.floor(850 + Math.random() * 900);
+    this.y = Math.floor(Math.random() * 700);
+    this.speed = 4;
+    this.img = new Image();
+    this.img.src = './images/background/spellCaster.png';
+
+    this.img.onload = function () {//loads image
+    };
+  }
+
+  _createClass(Skeleton, [{
+    key: "render",
+    value: function render(index) {
+      ctx.drawImage(this.img, backward[index], 589, 40, 53, this.x, this.y, 40, 53); // ctx.beginPath();
+      // ctx.rect(this.x, this.y, 40-10, 53-10);
+      // ctx.stroke();
+    }
+  }, {
+    key: "move",
+    value: function move(index) {
+      if (this.x < 800) {
+        this.speed = 20;
+      }
+
+      this.x -= this.speed;
+      this.render(index);
+    }
+  }, {
+    key: "taunt",
+    value: function taunt(index) {
+      ctx.drawImage(this.img, Math.floor(backward[index]), 144, 40, 53, this.x, this.y, 40, 53); // ctx.beginPath();s
       // ctx.rect(this.x, this.y, 40, 53);
       // ctx.stroke();
     }
