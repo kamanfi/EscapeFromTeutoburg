@@ -95,12 +95,14 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var img = new Image(); // img.src = 'https://opengameart.org/sites/default/files/Green-Cap-Character-16x18.png';
+var img = new Image();
+var img2 = new Image(); // img.src = 'https://opengameart.org/sites/default/files/Green-Cap-Character-16x18.png';
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var imgCache = {};
 img.src = './images/background/Legionnaire.png';
+img2.src = './images/background/spr_shield.png';
 
 img.onload = function () {
   imgCache[img] = img;
@@ -119,29 +121,33 @@ function getImage() {
   img.onload = function () {
     imgCache[img] = img;
   };
+
+  img2.onload = function () {
+    imgCache[img2] = img2;
+  };
 }
 
-function drawLegion(x, y, index, direction) {
-  var dmg = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-  getImage(imgCache[img]);
+function drawLegion(x, y, index, direction, spaceHeld) {
+  var dmg = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+  getImage();
 
   if (imgCache[img]) {
     if (direction === 'backward') {
       lastRender = renderbackward;
-      lastRender(x, y, index);
+      lastRender(x, y, index, spaceHeld);
     } else if (direction === 'forward') {
       lastRender = renderforward;
-      lastRender(x, y, index);
+      lastRender(x, y, index, spaceHeld);
     } else if (direction === 'up') {
       lastRender = renderup;
-      lastRender(x, y, index);
+      lastRender(x, y, index, spaceHeld);
     } else if (direction === 'down') {
       lastRender = renderdown;
-      lastRender(x, y, index);
+      lastRender(x, y, index, spaceHeld);
     } else if (direction === 'dead') {
-      renderDeath(x, y, index);
+      renderDeath(x, y, index, spaceHeld);
     } else if (direction == 'slash') {
-      renderSlash(x, y, index);
+      renderSlash(x, y, index, spaceHeld);
     } else {
       lastRender(x, y);
     } // // ctx.beginPath();
@@ -159,31 +165,37 @@ function drawLegion(x, y, index, direction) {
 
 function renderforward(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var spaceHeld = arguments.length > 3 ? arguments[3] : undefined;
   ctx.drawImage(imgCache[img], forward[index], 720, 40, 53, x, y, 40, 53);
 }
 
 function renderbackward(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var spaceHeld = arguments.length > 3 ? arguments[3] : undefined;
   ctx.drawImage(imgCache[img], backward[index], 589, 40, 53, x, y, 40, 53);
 }
 
 function renderup(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var spaceHeld = arguments.length > 3 ? arguments[3] : undefined;
   ctx.drawImage(imgCache[img], up[index], 524, 40, 53, x, y, 40, 53);
 }
 
 function renderdown(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var spaceHeld = arguments.length > 3 ? arguments[3] : undefined;
   ctx.drawImage(imgCache[img], down[index], 651, 40, 53, x, y, 40, 53);
 }
 
 function renderDeath(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var spaceHeld = arguments.length > 3 ? arguments[3] : undefined;
   ctx.drawImage(imgCache[img], death[index], 1291, 40, 53, x, y, 40, 53);
 }
 
 function renderSlash(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var spaceHeld = arguments.length > 3 ? arguments[3] : undefined;
   debugger;
   ctx.drawImage(imgCache[img], death[index], 1291, 40, 53, x, y, 40, 53);
 }
@@ -240,6 +252,9 @@ var leftPressed = false;
 var rightPressed = false;
 var upPressed = false;
 var downPressed = false;
+var spacePressed = false;
+var shieldCount = 50;
+var shielded = false;
 var forwardIndex = 0;
 var backwardIndex = 0;
 var upwardIndex = 0;
@@ -278,6 +293,7 @@ document.getElementById('start').addEventListener('click', function () {
     rightPressed = false;
     upPressed = false;
     downPressed = false;
+    spacePressed = false;
     forwardIndex = 0;
     backwardIndex = 0;
     upwardIndex = 0;
@@ -288,6 +304,7 @@ document.getElementById('start').addEventListener('click', function () {
     dmg = 4.8;
     dead = false;
     health = .2;
+    shieldCount = 50;
     x = 0;
     y = 350;
     loadEnemy();
@@ -308,6 +325,9 @@ document.getElementById('start').addEventListener('click', function () {
     ctx.fillStyle = '#FF0000';
     ctx.font = "16px Nosifer";
     ctx.fillText("Level-".concat(level), 450, 30);
+    var img2 = new Image();
+    img2.src = './images/background/spr_shield.png';
+    shielded = false;
     var img = new Image();
     img.src = background;
 
@@ -320,10 +340,21 @@ document.getElementById('start').addEventListener('click', function () {
         dead = true;
       }
 
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(0, 200, 255, .9)';
+      ctx.fillRect(x, y - 10, shieldCount * .8, 3);
+      ctx.stroke();
+
+      if (shieldCount > 0 && spacePressed) {
+        shielded = true;
+        shieldCount -= 1;
+        ctx.drawImage(img2, 9, 8, 537, 548, x - 5, y - 10, 55, 65);
+      }
+
       if (!dead) {
         if (leftPressed) {
           if (collisionCheck(enemyArray, playerBox) == false) {
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward');
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward', spacePressed);
           } else {
             x += speed;
 
@@ -335,11 +366,11 @@ document.getElementById('start').addEventListener('click', function () {
               y -= speed;
             }
 
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward', dmg);
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, backwardIndex, 'backward', dmg, spacePressed);
           }
         } else if (rightPressed) {
           if (collisionCheck(enemyArray, playerBox) == false) {
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward');
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward', spacePressed);
           } else {
             x -= speed;
 
@@ -351,24 +382,24 @@ document.getElementById('start').addEventListener('click', function () {
               y -= speed;
             }
 
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward', dmg);
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, forwardIndex, 'forward', dmg, spacePressed);
           }
         } else if (upPressed) {
           if (collisionCheck(enemyArray, playerBox) == false) {
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up');
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up', spacePressed);
           } else {
             y += speed;
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up', 1);
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, upwardIndex, 'up', 1, spacePressed);
           }
         } else if (downPressed) {
           if (collisionCheck(enemyArray, playerBox) == false) {
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down');
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down', spacePressed);
           } else {
             y -= speed;
-            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down', dmg);
+            Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, downwardIndex, 'down', dmg, spacePressed);
           }
         } else {
-          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y);
+          Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, spacePressed);
         }
 
         enemiesIndex === 8 ? enemiesIndex = 0 : enemiesIndex += 1;
@@ -449,7 +480,10 @@ document.getElementById('start').addEventListener('click', function () {
     enemyArray.forEach(function (enemy) {
       if (collision(enemy.box(), playerBox) == true) {
         // healthbar.style.width = `${health-=0.05}%`;
-        health -= 0.05;
+        if (shielded == false) {
+          health -= 0.05;
+        }
+
         flag = true;
       }
     });
@@ -498,6 +532,11 @@ document.getElementById('start').addEventListener('click', function () {
         downPressed = true;
         break;
 
+      case 32:
+        //space
+        spacePressed = true;
+        break;
+
       default:
         break;
     }
@@ -523,6 +562,11 @@ document.getElementById('start').addEventListener('click', function () {
       case 83:
         //move down
         downPressed = false;
+        break;
+
+      case 32:
+        //space
+        spacePressed = false;
         break;
 
       default:

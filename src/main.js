@@ -18,6 +18,9 @@ let leftPressed = false;
 let rightPressed = false;
 let upPressed = false;
 let downPressed = false;
+let spacePressed = false;
+let shieldCount = 50;
+let shielded = false;
 let forwardIndex = 0;
 let backwardIndex = 0;
 let upwardIndex = 0;
@@ -57,6 +60,7 @@ let enemyArray=[];
          rightPressed = false;
          upPressed = false;
          downPressed = false;
+         spacePressed = false;
          forwardIndex = 0;
          backwardIndex = 0;
          upwardIndex = 0;
@@ -67,6 +71,7 @@ let enemyArray=[];
          dmg = 4.8;
          dead = false;
          health = .2;
+         shieldCount =50;
          x = 0;
          y = 350;
          loadEnemy();
@@ -100,9 +105,10 @@ let enemyArray=[];
         ctx.fillStyle='#FF0000';
         ctx.font ="16px Nosifer";
         ctx.fillText(`Level-${level}`, 450,30);
-
-
-
+        let img2 = new Image();
+        img2.src=  './images/background/spr_shield.png';
+        shielded = false;
+        
         const img = new Image();
         img.src = background;
         img.onload = function () {
@@ -113,11 +119,22 @@ let enemyArray=[];
                 if (health <=0){
                     dead = true;
                 }
-                
+                     ctx.beginPath();
+                     ctx.fillStyle='rgba(0, 200, 255, .9)';
+                     ctx.fillRect(x,y-10,shieldCount*.8,3);
+                    ctx.stroke();
+
+
+
+                if (shieldCount > 0 && spacePressed){
+                    shielded = true;
+                    shieldCount -=1;
+                    ctx.drawImage(img2 , 9, 8 , 537, 548, x-5, y-10, 55, 65);
+                }
                 if (!dead){
                     if (leftPressed){
                         if (collisionCheck(enemyArray,playerBox) == false){
-                        drawLegion(x,y,backwardIndex,'backward');
+                        drawLegion(x,y,backwardIndex,'backward',spacePressed);
                         }else{
                             x+=speed;
                             if (upPressed){
@@ -127,11 +144,11 @@ let enemyArray=[];
                                 y-=speed;
                             }
                             
-                            drawLegion(x,y,backwardIndex,'backward',dmg);
+                            drawLegion(x,y,backwardIndex,'backward',dmg,spacePressed);
                         }
                     }else if(rightPressed){
                         if (collisionCheck(enemyArray,playerBox) == false){
-                        drawLegion(x,y,forwardIndex,'forward');
+                        drawLegion(x,y,forwardIndex,'forward',spacePressed);
                         }else{
                             x -=speed;
                             if (upPressed){
@@ -140,28 +157,26 @@ let enemyArray=[];
                             if (downPressed){
                                 y-=speed;
                             }
-                            drawLegion(x,y,forwardIndex,'forward',dmg);
+                            drawLegion(x,y,forwardIndex,'forward',dmg,spacePressed);
                         }
                     } else if (upPressed){
                         if (collisionCheck(enemyArray,playerBox) == false){
-                        drawLegion(x,y,upwardIndex,'up');
+                        drawLegion(x,y,upwardIndex,'up',spacePressed);
                         }else{
                             y +=speed;
-                            drawLegion(x,y,upwardIndex,'up',1);
+                            drawLegion(x,y,upwardIndex,'up',1,spacePressed);
                         }
                     }else if (downPressed){
                         if (collisionCheck(enemyArray,playerBox) == false){
-                        drawLegion(x,y,downwardIndex,'down');
+                        drawLegion(x,y,downwardIndex,'down',spacePressed);
                         }else{
                             y -=speed;
-                            drawLegion(x,y,downwardIndex,'down',dmg);
+                            drawLegion(x,y,downwardIndex,'down',dmg,spacePressed);
                         }
                     }else{
-                        drawLegion(x,y);
+                        drawLegion(x,y,spacePressed);
                     }
                     enemiesIndex === 8 ? enemiesIndex =0 : enemiesIndex +=1;
-                
-                
                     enemyArray.forEach(enemy => {
                             enemy.move(enemiesIndex);
                             collisionCheck(enemyArray, playerBox);  
@@ -200,7 +215,6 @@ let enemyArray=[];
                     }
                     
                 }
-              
         };
     
          
@@ -247,7 +261,9 @@ let enemyArray=[];
             enemyArray.forEach((enemy) =>{
                 if (collision(enemy.box(),playerBox ) == true){
                     // healthbar.style.width = `${health-=0.05}%`;
-                    health-=0.05;
+                    if ( shielded == false){
+                        health-=0.05 ;
+                    }
                     flag = true;
                 }
             });
@@ -291,6 +307,10 @@ let enemyArray=[];
             //move down
                 downPressed = true;
                 break;
+            case 32:
+            //space
+            spacePressed = true;
+            break;
             default:
                 break;
         }  
@@ -312,6 +332,10 @@ let enemyArray=[];
             case 83:
             //move down
                 downPressed = false;
+                break;
+            case 32:
+            //space
+                spacePressed = false;
                 break;
             default:
                 break;
