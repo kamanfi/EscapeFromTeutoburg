@@ -1,11 +1,11 @@
-## EscpareFromTeutoburg
+## Escape From Teutoburg
 
 ![](images/ReadME/Main.png)
 
 
 ### Background
 
-EscpareFromTeutoburg is a sprite based game of survival, a lone legionnaire nust survived the hordes of monsters as he tries to make it back to Rome
+EscapeFromTeutoburg is a sprite based game of survival, a lone legionnaire nust survived the hordes of monsters as he tries to make it back to Rome
 
 
 ### Functionality & MVP  
@@ -55,9 +55,8 @@ In addition to the entry file, there will be four scripts involved in this proje
 - Bosses will spawn less frequently than germanic soldiers
 
 **Day 3**: Create interactive logic between 3 characters ( germanic soldiers, legionnaire, boss)
-- If the player(legionnaire) touches any germanic soldier, he loses 2% of his health, 
-- If the player(legionnaire) touches any boss, he loses 25% of his health, 
-- Make sure spawn of boss and germanic soldeirs are random
+- If the player(legionnaire) touches any monster, he dies 
+- Make sure spawn of boss and skeletons soldeirs are random
 
 **Day 4**: Install the controls for the user to move legionnaire.
 - Make sure player can move legionnaire
@@ -66,7 +65,7 @@ In addition to the entry file, there will be four scripts involved in this proje
 ### Bonus features
 
 
-- [ ] Add random "power up" item that allows legionnaire to throw "pilum" to kill germanic soldiers
+- [ ] Add random "power up" item that allows legionnaire to throw "pilum" to kill skeletons
 - [ ] Add random "power up" item that allows legionnaire to throw raise shield and take no dmg from collisions
 
 
