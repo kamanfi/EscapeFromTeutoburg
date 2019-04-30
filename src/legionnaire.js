@@ -102,7 +102,6 @@ function renderDeath(x, y, index = 0, spaceHeld) {
 }
 
 function renderSlash(x, y, index = 0, spaceHeld) {
-    debugger
     ctx.drawImage(imgCache[img], death[index], 1291, 40, 53, x, y, 40, 53);
 
 }

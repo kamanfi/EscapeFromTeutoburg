@@ -196,7 +196,6 @@ function renderDeath(x, y) {
 function renderSlash(x, y) {
   var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   var spaceHeld = arguments.length > 3 ? arguments[3] : undefined;
-  debugger;
   ctx.drawImage(imgCache[img], death[index], 1291, 40, 53, x, y, 40, 53);
 }
 
@@ -325,7 +324,7 @@ document.getElementById('start').addEventListener('click', function () {
     var background = './images/background/emptyField.png';
     ctx.fillStyle = '#FF0000';
     ctx.font = "16px Nosifer";
-    ctx.fillText("Level-".concat(level), 450, 30);
+    ctx.fillText("Level: ".concat(level), 450, 30);
     var img2 = new Image();
     img2.src = './images/background/spr_shield.png';
     shielded = false;
@@ -435,8 +434,8 @@ document.getElementById('start').addEventListener('click', function () {
         ctx.fillText("GAME OVER", 450, 300);
         ctx.fillStyle = '#FFFFFF';
         ctx.font = "12px Nosifer";
-        ctx.fillText("you failed Rome", 450, 330);
-        ctx.fillText("restart?", 450, 350);
+        ctx.fillText("Press Enter to", 450, 330);
+        ctx.fillText("restart", 450, 350);
         ctx.textAlign = "center";
         ctx.fillStyle = 'rgba(255, 255, 255, .4)';
         document.addEventListener("click", mouseClicked, false);
