@@ -414,15 +414,6 @@ document.getElementById('start').addEventListener('click', function () {
           };
         });
       } else {
-        var mouseClicked = function mouseClicked(e) {
-          var mousePos = getRelativeCoords(e);
-
-          if (collision(mousePos, playAgainBox)) {
-            level = 1;
-            resetState();
-          }
-        };
-
         Object(_legionnaire__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, deathIndex, 'dead');
         deathIndex === 5 ? deathIndex = 5 : deathIndex += 1;
         enemyArray.forEach(function (ske) {
@@ -438,7 +429,7 @@ document.getElementById('start').addEventListener('click', function () {
         ctx.fillText("restart", 450, 350);
         ctx.textAlign = "center";
         ctx.fillStyle = 'rgba(255, 255, 255, .4)';
-        document.addEventListener("click", mouseClicked, false);
+        window.addEventListener("click", mouseClicked, false);
 
         if (enterPressed) {
           level = 1;
@@ -478,6 +469,17 @@ document.getElementById('start').addEventListener('click', function () {
 
     loop();
     requestAnimationFrame(init);
+  }
+
+  function mouseClicked(e) {
+    e.stopPropagation();
+    console.log(e);
+    var mousePos = getRelativeCoords(e);
+
+    if (collision(mousePos, playAgainBox)) {
+      level = 1;
+      resetState();
+    }
   }
 
   function collisionCheck(enemyArray, playerBox) {

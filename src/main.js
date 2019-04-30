@@ -202,17 +202,7 @@ document.getElementById('start').addEventListener('click', () => {
                 ctx.fillText("restart", 450, 350);
                 ctx.textAlign = "center";
                 ctx.fillStyle = 'rgba(255, 255, 255, .4)';
-                document.addEventListener("click", mouseClicked, false);
-
-                function mouseClicked(e) {
-
-                    let mousePos = getRelativeCoords(e);
-                    if (collision(mousePos, playAgainBox)) {
-                        level  =1;
-                        resetState();
-                    }
-
-                }
+                window.addEventListener("click", mouseClicked, false);
 
                 if (enterPressed){
                     level =1;
@@ -256,6 +246,18 @@ document.getElementById('start').addEventListener('click', () => {
         }
         loop();
         requestAnimationFrame(init);
+
+    }
+
+
+    function mouseClicked(e) {
+        e.stopPropagation();
+        console.log(e)
+        let mousePos = getRelativeCoords(e);
+        if (collision(mousePos, playAgainBox)) {
+            level  =1;
+            resetState();
+        }
 
     }
 
