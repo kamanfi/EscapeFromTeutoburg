@@ -36,7 +36,8 @@ body{
     border: none;
 }
 #start :hover{
-    font-size: 18px;
+    font-size: 35px;
+    cursor: pointer;
 }
 #survive{
     color: red;
@@ -46,11 +47,26 @@ p{
     color: black;
 }
 
+p span{
+    color:white;
+    font-weight: bold;
+
+}
+
 #personalLinks{
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
 }
 
 #EPIC{
     display: none;
+}
+
+#title{
+    position: relative;
+    justify-self: center;
+    color: red;
+    font-size: 30px;
+
 }

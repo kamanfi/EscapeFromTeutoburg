@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,42 +8,42 @@
     <link rel="stylesheet" href="./dist/game.css">
     <link href="https://fonts.googleapis.com/css?family=Nosifer" rel="stylesheet">
     <title>Escape From Teutoburg</title>
-    <link rel="icon" href="./images/background/spqr.jpg"/>
-    <audio id='EPIC'
-            src="./music/bensound-epic.mp3" 
-            preload="auto" 
-            controls="none"
-            loop ="true">
+    <link rel="icon" href="./images/background/spqr.jpg" />
+    <audio id='EPIC' src="./music/bensound-epic.mp3" preload="auto" controls="none" loop="true">
     </audio>
     <style>
-            * {padding: 0; margin: 0;}
+        * {padding: 0; margin: 0;}
             canvas { display: block; margin: 3% auto;}
     </style>
 </head>
-<body >
-    
+
+<body>
     <button id='start' type='button'>
+        <h1 id='title'>Escpare From Teutoburg</h1>
         <p>YOU ARE THE ONLY ONE LEFT...</p>
-        <p> w a s d to move...avoid the monsters...KEEP MOVING RIGHT</p>
+        
+        <p> <span>W A S D </span>to move...<span>space</span>  to use shield </p>
+        <p>avoid the monsters...KEEP MOVING RIGHT</p>
         <p>good luck soldier....</p>
         <p>Click to start</p>
         <p id='survive'>SURVIVE</p>
     </button>
     <div id=personalLinks>
-            <a href="https://github.com/kamanfi/EscpareFromTeutoburg/"><img src="./images/background/githubLogo.png" alt=""></a>
-            <a href="https://www.linkedin.com/in/kwasi-amanfi-758099185/"><img src="./images/background/LinkedIn.png" alt=""></a>
-            <a href="https://angel.co/kwasi-amanfi?al_content=view+your+profile&al_source=transaction_feed%2Fnetwork_sidebar"><img src="images/background/AngelList.png" alt=""></a>
-        </div>
+        <a href="https://github.com/kamanfi/EscpareFromTeutoburg/"><img src="./images/background/githubLogo.png" alt=""></a>
+        <a href="https://www.linkedin.com/in/kwasi-amanfi-758099185/"><img src="./images/background/LinkedIn.png" alt=""></a>
+        <a href="https://angel.co/kwasi-amanfi?al_content=view+your+profile&al_source=transaction_feed%2Fnetwork_sidebar"><img
+                src="images/background/AngelList.png" alt=""></a>
+    </div>
     <div>
 
     </div>
-    
+
     <canvas id="myCanvas" width="900" height="700">
     </canvas>
     <!-- <div id='healthbar'></div> -->
-    
+
 </body>
 
 <script type="text/javascript" src="./bundle.js"></script>
-</html>
 
+</html>

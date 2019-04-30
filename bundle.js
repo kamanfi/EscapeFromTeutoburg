@@ -253,6 +253,7 @@ var rightPressed = false;
 var upPressed = false;
 var downPressed = false;
 var spacePressed = false;
+var enterPressed = false;
 var shieldCount = 50;
 var shielded = false;
 var forwardIndex = 0;
@@ -439,6 +440,11 @@ document.getElementById('start').addEventListener('click', function () {
         ctx.textAlign = "center";
         ctx.fillStyle = 'rgba(255, 255, 255, .4)';
         document.addEventListener("click", mouseClicked, false);
+
+        if (enterPressed) {
+          level = 1;
+          resetState();
+        }
       }
     };
 
@@ -537,6 +543,11 @@ document.getElementById('start').addEventListener('click', function () {
         spacePressed = true;
         break;
 
+      case 13:
+        //enter
+        enterPressed = true;
+        break;
+
       default:
         break;
     }
@@ -567,6 +578,11 @@ document.getElementById('start').addEventListener('click', function () {
       case 32:
         //space
         spacePressed = false;
+        break;
+
+      case 13:
+        //enter
+        enterPressed = false;
         break;
 
       default:
