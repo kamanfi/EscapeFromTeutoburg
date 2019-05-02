@@ -251,13 +251,12 @@ document.getElementById('start').addEventListener('click', () => {
 
 
     function mouseClicked(e) {
-        e.stopPropagation();
-        console.log(e)
         let mousePos = getRelativeCoords(e);
         if (collision(mousePos, playAgainBox)) {
             level  =1;
             resetState();
         }
+        
 
     }
 
