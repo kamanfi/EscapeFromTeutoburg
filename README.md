@@ -1,6 +1,6 @@
 ## Escape From Teutoburg
 
-[Live Site](https://thiscord.herokuapp.com/#/)
+[Live Site](https://kamanfi.github.io/EscapeFromTeutoburg/index.html)
 
 ![](images/ReadME/Main.png)
 
