@@ -1,6 +1,6 @@
 ## Escape From Teutoburg
 
-[Live Site](https://kamanfi.github.io/EscapeFromTeutoburg/index.html)
+## [Live Site](https://kamanfi.github.io/EscapeFromTeutoburg/index.html)
 
 ![](images/ReadME/Main.png)
 
