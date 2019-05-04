@@ -2,7 +2,28 @@ import drawLegion from './legionnaire';
 import Skeleton from './skeleton';
 import Orc from './orcs';
 import spellCaster from './spellCaster'
-// import drawBox from './invisbleBoxes';
+
+//add firebase
+
+
+
+var config = {
+    apiKey: "AIzaSyAcNRFWooMyvX681C3qLHdFVhSMH-tueDg",
+    authDomain: "escape-from-teutoburg.firebaseapp.com",
+    databaseURL: "https://escape-from-teutoburg.firebaseio.com",
+    projectId: "escape-from-teutoburg",
+    storageBucket: "escape-from-teutoburg.appspot.com",
+    messagingSenderId: "965496208727"
+};
+firebase.initializeApp(config);
+var firestore = firebase.firestore();
+console.log(firestore)
+  const docRef = firestore.doc("highscores/userData");
+
+  document.getElementById("hidden")
+
+
+
 
 // initialState
 let canvas = document.getElementById("myCanvas");
@@ -192,6 +213,7 @@ document.getElementById('start').addEventListener('click', () => {
                     ske.taunt(tauntIndex);
                     tauntIndex === speed ? tauntIndex = 0 : tauntIndex += 1;
                 });
+
                 ctx.fillStyle = '#FF0000';
                 ctx.font = "60px Nosifer";
                 ctx.fillText("GAME OVER", 450, 300);
@@ -202,6 +224,7 @@ document.getElementById('start').addEventListener('click', () => {
                 ctx.fillText("restart", 450, 350);
                 ctx.textAlign = "center";
                 ctx.fillStyle = 'rgba(255, 255, 255, .4)';
+                document.getElementById('hidden').style.display = ("flex");
                 window.addEventListener("click", mouseClicked, false);
 
                 if (enterPressed){

@@ -11,9 +11,11 @@
     <link rel="icon" href="./images/background/spqr.jpg" />
     <audio id='EPIC' src="./music/bensound-epic.mp3" preload="auto" controls="none" loop="true">
     </audio>
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-firestore.js"></script>
     <style>
         * {padding: 0; margin: 0;}
-            canvas { display: block; margin: 3% auto;}
+            canvas { display: block; margin: 2% auto;}
     </style>
 </head>
 
@@ -21,8 +23,8 @@
     <button id='start' type='button'>
         <h1 id='title'>Escape From Teutoburg</h1>
         <p>YOU ARE THE ONLY ONE LEFT...</p>
-        
-        <p> <span>W A S D </span>to move...<span>space</span>  to use shield </p>
+
+        <p> <span>W A S D </span>to move...<span>space</span> to use shield </p>
         <p>avoid the monsters...KEEP MOVING RIGHT</p>
         <p>good luck soldier....</p>
         <p>Click to start</p>
@@ -34,13 +36,20 @@
         <a href="https://angel.co/kwasi-amanfi?al_content=view+your+profile&al_source=transaction_feed%2Fnetwork_sidebar"><img
                 src="images/background/AngelList.png" alt=""></a>
     </div>
-    <div>
 
+    <div class='holder'>
+        <canvas id="myCanvas" width="900" height="700">
+        </canvas>
+        <!-- <div id="hidden">
+            <Label>Enter Name
+            <form action="">
+                <input type="text">
+                <button type="button">save</button>
+            </form>
+        </Label>
+        </div> -->
     </div>
 
-    <canvas id="myCanvas" width="900" height="700">
-    </canvas>
-    <!-- <div id='healthbar'></div> -->
 
 </body>
 

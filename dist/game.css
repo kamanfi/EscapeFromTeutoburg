@@ -10,17 +10,23 @@
 body{
     background-image: url('../images/background/treeRain.gif');
     background-size: cover;
+    overflow: hidden;
+    margin-bottom: 1%;
 }
 
 #hidden{
-    background-color: red;
-    display: absolute;
-    top: 1000px;
-    width: 100%;
-    height: 100%;
+    display: flex;
+    align-content: row;
+    background-color: rgba(200,0,0,.7);
+    position: absolute;
+    justify-content: center;
+    width: 10%;
+    height: 30%;
     z-index: 10;
+    left: 44%;
+    top: 36%;
 }
-
+/* rgba(0, 200, 255, .9) */
 #show{
     display: block;
 }
@@ -69,4 +75,9 @@ p span{
     color: red;
     font-size: 30px;
 
+}
+
+.holder{
+ position: relative;   
+ 
 }

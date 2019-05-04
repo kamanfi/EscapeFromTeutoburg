@@ -226,8 +226,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import drawBox from './invisbleBoxes';
-// initialState
+ //add firebase
+
+var config = {
+  apiKey: "AIzaSyAcNRFWooMyvX681C3qLHdFVhSMH-tueDg",
+  authDomain: "escape-from-teutoburg.firebaseapp.com",
+  databaseURL: "https://escape-from-teutoburg.firebaseio.com",
+  projectId: "escape-from-teutoburg",
+  storageBucket: "escape-from-teutoburg.appspot.com",
+  messagingSenderId: "965496208727"
+};
+firebase.initializeApp(config);
+var firestore = firebase.firestore();
+console.log(firestore);
+var docRef = firestore.doc("highscores/userData");
+document.getElementById("hidden"); // initialState
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -429,6 +442,7 @@ document.getElementById('start').addEventListener('click', function () {
         ctx.fillText("restart", 450, 350);
         ctx.textAlign = "center";
         ctx.fillStyle = 'rgba(255, 255, 255, .4)';
+        document.getElementById('hidden').style.display = "flex";
         window.addEventListener("click", mouseClicked, false);
 
         if (enterPressed) {
