@@ -7,14 +7,7 @@ import spellCaster from './spellCaster'
 
 
 
-var config = {
-    apiKey: "AIzaSyAcNRFWooMyvX681C3qLHdFVhSMH-tueDg",
-    authDomain: "escape-from-teutoburg.firebaseapp.com",
-    databaseURL: "https://escape-from-teutoburg.firebaseio.com",
-    projectId: "escape-from-teutoburg",
-    storageBucket: "escape-from-teutoburg.appspot.com",
-    messagingSenderId: "965496208727"
-};
+
 firebase.initializeApp(config);
 var firestore = firebase.firestore();
   const docRef = firestore.doc("highscores/userData");
