@@ -17,7 +17,6 @@ var config = {
 };
 firebase.initializeApp(config);
 var firestore = firebase.firestore();
-console.log(firestore)
   const docRef = firestore.doc("highscores/userData");
 
   document.getElementById("hidden")
@@ -224,7 +223,7 @@ document.getElementById('start').addEventListener('click', () => {
                 ctx.fillText("restart", 450, 350);
                 ctx.textAlign = "center";
                 ctx.fillStyle = 'rgba(255, 255, 255, .4)';
-                document.getElementById('hidden').style.display = ("flex");
+                // document.getElementById('hidden').style.display = ("flex");
                 window.addEventListener("click", mouseClicked, false);
 
                 if (enterPressed){
