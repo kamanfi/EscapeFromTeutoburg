@@ -8,11 +8,11 @@ import spellCaster from './spellCaster'
 
 
 
-firebase.initializeApp(config);
-var firestore = firebase.firestore();
-  const docRef = firestore.doc("highscores/userData");
+// firebase.initializeApp(config);
+// var firestore = firebase.firestore();
+//   const docRef = firestore.doc("highscores/userData");
 
-  document.getElementById("hidden")
+//   document.getElementById("hidden")
 
 
 

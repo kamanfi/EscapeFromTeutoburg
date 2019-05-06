@@ -227,11 +227,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
  //add firebase
-
-firebase.initializeApp(config);
-var firestore = firebase.firestore();
-var docRef = firestore.doc("highscores/userData");
-document.getElementById("hidden"); // initialState
+// firebase.initializeApp(config);
+// var firestore = firebase.firestore();
+//   const docRef = firestore.doc("highscores/userData");
+//   document.getElementById("hidden")
+// initialState
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
