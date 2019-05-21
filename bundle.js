@@ -312,6 +312,7 @@ document.getElementById('start').addEventListener('click', function () {
     x = 0;
     y = 350;
     loadEnemy();
+    window.removeEventListener("click", mouseClicked, false);
   }
 
   resetState(); // let collisionCheckBox =[[14,200], [14,340], [104,200], [140,340]];

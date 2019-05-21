@@ -89,6 +89,7 @@ document.getElementById('start').addEventListener('click', () => {
         x = 0;
         y = 350;
         loadEnemy();
+        window.removeEventListener("click", mouseClicked, false);
     }
 
 
